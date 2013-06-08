@@ -6,7 +6,7 @@ For example, we need to call the ElasticSearch url, but we don't want to have El
 
     http://localhost:9200/simple/webpage/_search?size=20&q=$query&fields=file.title,url
 
-we call 
+we call
 
     SearchProxy.php?query=python
 
@@ -16,7 +16,10 @@ that contains
 		// SearchProxy.php
         require_once 'proxy.php';
         $proxy = new ProxyPHP();
-    $proxy->base_url = "http://localhost:9200";
+        $proxy->base_url = "http://localhost:9200";
+        $proxy->isJSON();
+        // set the right content type to the proxy response
+        header('Content-Type: application/json');
         $query = $proxy->gt("query");
         if($query){
             $es_params = '/simple/webpage/_search?size=20&q=$query&fields=file.title,url';
